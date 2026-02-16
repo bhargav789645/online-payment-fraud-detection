@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Result - Fraud Detection System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔒 Fraud Detection System</h1>
+            <p>Prediction Result</p>
+        </div>
+        
+        <div class="result-container">
+            {% if error %}
+                <div class="result error-box">
+                    <h2>⚠️ Error</h2>
+                    <p>{{ error }}</p>
+                </div>
+            {% elif prediction %}
+                {% if prediction.is_fraud %}
+                    <div class="result fraud-box">
+                        <h2>🚨 FRAUDULENT TRANSACTION DETECTED</h2>
+                        <div class="result-details">
+                            <p><strong>Status:</strong> <span class="badge fraud">FRAUD</span></p>
+                            <p><strong>Fraud Probability:</strong> <span class="probability">{{ "%.2f"|format(prediction.probability * 100) }}%</span></p>
+                            <p><strong>Confidence:</strong> {{ prediction.confidence }}</p>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="result safe-box">
+                        <h2>✅ SAFE TRANSACTION</h2>
+                        <div class="result-details">
+                            <p><strong>Status:</strong> <span class="badge safe">SAFE</span></p>
+                            <p><strong>Fraud Probability:</strong> <span class="probability">{{ "%.2f"|format(prediction.probability * 100) }}%</span></p>
+                            <p><strong>Confidence:</strong> {{ prediction.confidence }}</p>
+                        </div>
+                    </div>
+                {% endif %}
+                
+                <div class="transaction-details">
+                    <h3>Transaction Details</h3>
+                    <table class="details-table">
+                        <tr>
+                            <td><strong>Step:</strong></td>
+                            <td>{{ step }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Type:</strong></td>
+                            <td>{{ transaction_type }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Amount:</strong></td>
+                            <td>${{ "%.2f"|format(amount) }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Old Balance (Origin):</strong></td>
+                            <td>${{ "%.2f"|format(oldbalanceOrg) }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>New Balance (Origin):</strong></td>
+                            <td>${{ "%.2f"|format(newbalanceOrig) }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Old Balance (Destination):</strong></td>
+                            <td>${{ "%.2f"|format(oldbalanceDest) }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>New Balance (Destination):</strong></td>
+                            <td>${{ "%.2f"|format(newbalanceDest) }}</td>
+                        </tr>
+                    </table>
+                </div>
+            {% else %}
+                <div class="result">
+                    <p>No prediction result available.</p>
+                </div>
+            {% endif %}
+            
+            <div class="button-group">
+                <a href="/predict" class="btn btn-primary">Check Another Transaction</a>
+                <a href="/" class="btn btn-secondary">Back Home</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

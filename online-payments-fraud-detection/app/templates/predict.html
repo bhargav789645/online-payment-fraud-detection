@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predict Fraud - Fraud Detection System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔒 Fraud Detection System</h1>
+            <p>Enter Transaction Details</p>
+        </div>
+        
+        <div class="form-container">
+            <form method="POST" action="/submit" class="prediction-form">
+                <div class="form-group">
+                    <label for="step">Step:</label>
+                    <input type="number" id="step" name="step" step="1" min="0" required>
+                    <small>Time step of the transaction (1-744)</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="type">Transaction Type:</label>
+                    <select id="type" name="type" required>
+                        <option value="">-- Select Type --</option>
+                        <option value="CASH_IN">CASH_IN</option>
+                        <option value="CASH_OUT">CASH_OUT</option>
+                        <option value="DEBIT">DEBIT</option>
+                        <option value="PAYMENT">PAYMENT</option>
+                        <option value="TRANSFER">TRANSFER</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="amount">Amount:</label>
+                    <input type="number" id="amount" name="amount" step="0.01" min="0" required>
+                    <small>Transaction amount</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="oldbalanceOrg">Old Balance Origin:</label>
+                    <input type="number" id="oldbalanceOrg" name="oldbalanceOrg" step="0.01" min="0" required>
+                    <small>Initial balance of sender</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="newbalanceOrig">New Balance Origin:</label>
+                    <input type="number" id="newbalanceOrig" name="newbalanceOrig" step="0.01" min="0" required>
+                    <small>New balance of sender after transaction</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="oldbalanceDest">Old Balance Destination:</label>
+                    <input type="number" id="oldbalanceDest" name="oldbalanceDest" step="0.01" min="0" required>
+                    <small>Initial balance of receiver</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="newbalanceDest">New Balance Destination:</label>
+                    <input type="number" id="newbalanceDest" name="newbalanceDest" step="0.01" min="0" required>
+                    <small>New balance of receiver after transaction</small>
+                </div>
+                
+                <div class="button-group">
+                    <button type="submit" class="btn btn-primary">Analyze Transaction</button>
+                    <a href="/" class="btn btn-secondary">Back Home</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
